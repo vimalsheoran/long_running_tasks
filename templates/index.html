@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is a file uploader</title>
+</head>
+<body>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    <ul class=flashes>
+	    {% for message in messages %}
+	    {% if poisoned %}
+	    <li>{{ message }}</li>
+	    {% elif monitor %}
+	    	<li>{{ message }}<a href="http://localhost:5000/purge_upload/{{task_id}}">STOP TASK</a>&emsp;<a href="http://localhost:5000/upload_status/{{task_id}}">GET STATUS</a></li>
+	    {% else %}
+	      <li>{{ message }} <span>{{filename}}</span><a href="http://localhost:5000/purge_upload/{{task_id}}">STOP TASK</a>&emsp;<a href="http://localhost:5000/upload_status/{{task_id}}">GET STATUS</a></li>
+	    {% endif %}
+	    {% endfor %}
+	    </ul>
+	  {% endif %}
+	{% endwith %}
+	<form action="http://localhost:5000/upload" enctype="multipart/form-data" method="POST">
+		<input type="file" name="content"/>
+		<input type="submit" name="submit" placeholder="UPLOAD!"/>
+	</form>
+</body>
+</html>
